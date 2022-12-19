@@ -48,9 +48,9 @@ public class automationPracticeFormTests {
         $("#userNumber").setValue(phone);
 
         $("#dateOfBirthInput").click();
-        $(".react-datepicker__month-select").selectOption("May");
-        $(".react-datepicker__year-select").selectOption("1999");
-        $(".react-datepicker__day--017").click();
+        $(".react-datepicker__month-select").selectOption(month);
+        $(".react-datepicker__year-select").selectOption(year);
+        $(".react-datepicker__day--0" + day).click();
 
         $("#subjectsInput").setValue(subject).pressEnter();
 
