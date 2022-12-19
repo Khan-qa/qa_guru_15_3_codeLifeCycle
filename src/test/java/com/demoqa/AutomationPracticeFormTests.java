@@ -5,11 +5,12 @@ import com.codeborne.selenide.Configuration;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.Selenide.executeJavaScript;
 
-public class automationPracticeFormTests {
+public class AutomationPracticeFormTests {
 
     String firstName = "Хан";
     String lastName = "Ханов";
@@ -44,7 +45,7 @@ public class automationPracticeFormTests {
         $("#firstName").setValue(firstName);
         $("#lastName").setValue(lastName);
         $("#userEmail").setValue(email);
-        $("[for=gender-radio-1]").click();
+        $(byText(gender)).click();
         $("#userNumber").setValue(phone);
 
         $("#dateOfBirthInput").click();
@@ -54,17 +55,29 @@ public class automationPracticeFormTests {
 
         $("#subjectsInput").setValue(subject).pressEnter();
 
-        $("[for=hobbies-checkbox-3]").click();
-        $("#uploadPicture").uploadFromClasspath("1.png");
+        $(byText(hobbies)).click();
+        $("#uploadPicture").uploadFromClasspath(picture);
         $("#currentAddress").setValue(currentAddress);
 
         $("#state").click();
-        $("#stateCity-wrapper").$(byText("NCR")).click();
+        $("#stateCity-wrapper").$(byText(state)).click();
         $("#city").click();
-        $("#stateCity-wrapper").$(byText("Delhi")).click();
+        $("#stateCity-wrapper").$(byText(city)).click();
         $("#submit").click();
 
         $(".modal-dialog").should(Condition.appear);
+
+        $(".modal-header").shouldHave(text("Thanks for submitting the form"));
+        $(".table").$(byText("Student Name")).parent().lastChild().shouldHave(text("Хан Ханов"));
+        $(".table").$(byText("Student Email")).parent().lastChild().shouldHave(text("han@hanov.com"));
+        $(".table").$(byText("Gender")).parent().lastChild().shouldHave(text("Female"));
+        $(".table").$(byText("Mobile")).parent().lastChild().shouldHave(text("7123456789"));
+        $(".table").$(byText("Date of Birth")).parent().lastChild().shouldHave(text("17 May,1999"));
+        $(".table").$(byText("Subjects")).parent().lastChild().shouldHave(text("Physics"));
+        $(".table").$(byText("Hobbies")).parent().lastChild().shouldHave(text("Sports"));
+        $(".table").$(byText("Picture")).parent().lastChild().shouldHave(text("1.png"));
+        $(".table").$(byText("Address")).parent().lastChild().shouldHave(text("Han KZ"));
+        $(".table").$(byText("State and City")).parent().lastChild().shouldHave(text("NCR Delhi"));
     }
 
 }
